@@ -1,12 +1,9 @@
-// main.mjs
 import { createTrailDots, startTrail } from "./anim.mjs";
 
 const container = document.body;
 
-const dots = createTrailDots(container);
+const dots = createTrailDots(container, 120); // number of bubbles
 
 startTrail(dots, {
-  ease: 0.18,
-  size: 8,
-  color: "#00ffcc",
+    ease: 0.18
 });
