@@ -1,5 +1,5 @@
 /**
- * Create trail dots and return structured objects
+ * Create bubble trail dots
  */
 export function createTrailDots(container, count = 100) {
     if (!container) {
@@ -13,23 +13,26 @@ export function createTrailDots(container, count = 100) {
         const el = document.createElement("div");
         el.classList.add("trail");
 
-        const color = getRandomColor(); // 🎨 random color ici
+        const color = getRandomColor();
+        const size = getRandomInt(30, 100); // 👈 bubble size range
 
+        // 🎯 Bubble style
+        el.style.width = `${size}px`;
+        el.style.height = `${size}px`;
+        el.style.borderRadius = "50%";
         el.style.backgroundColor = color;
+        el.style.position = "absolute";
+        el.style.pointerEvents = "none";
 
         fragment.appendChild(el);
 
-        const size = getRandomInt(4, 14);
-
-
-
-dots.push({
-    el,
-    x: 0,
-    y: 0,
-    color,
-    size // 👈 IMPORTANT: store size
-});
+        dots.push({
+            el,
+            x: 0,
+            y: 0,
+            color,
+            size
+        });
     }
 
     container.appendChild(fragment);
@@ -38,13 +41,10 @@ dots.push({
 }
 
 /**
- * Start smooth mouse trail animation
+ * Start smooth mouse bubble trail
  */
 export function startTrail(dots, options = {}) {
-    const {
-        ease = 0.15,
-        size = 10
-    } = options;
+    const { ease = 0.15 } = options;
 
     let mouseX = 0;
     let mouseY = 0;
@@ -64,15 +64,11 @@ export function startTrail(dots, options = {}) {
             dot.x += (x - dot.x) * ease;
             dot.y += (y - dot.y) * ease;
 
-            const half = size * 0.5;
+            const half = dot.size * 0.5;
 
             dot.el.style.transform =
                 `translate3d(${dot.x - half}px, ${dot.y - half}px, 0)`;
 
-            dot.el.style.width = `${size}px`;
-            dot.el.style.height = `${size}px`;
-
-            // 🎨 couleur déjà assignée à la création
             dot.el.style.backgroundColor = dot.color;
 
             x = dot.x;
@@ -86,21 +82,16 @@ export function startTrail(dots, options = {}) {
 }
 
 /**
- * Random integer (safe)
+ * Random integer helper
  */
 export function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-
-    if (min > max) {
-        throw new Error("min must be <= max");
-    }
-
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
- * Random hex color (#rrggbb)
+ * Random color
  */
 export function getRandomColor() {
     return `#${Math.floor(Math.random() * 0xffffff)
