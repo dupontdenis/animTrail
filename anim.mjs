@@ -21,8 +21,7 @@ export function createTrailDots(container, count = 100) {
 
         const size = getRandomInt(4, 14);
 
-el.style.width = `${size}px`;
-el.style.height = `${size}px`;
+
 
 dots.push({
     el,
