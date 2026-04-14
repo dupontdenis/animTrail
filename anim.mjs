@@ -19,12 +19,18 @@ export function createTrailDots(container, count = 100) {
 
         fragment.appendChild(el);
 
-        dots.push({
-            el,
-            x: 0,
-            y: 0,
-            color
-        });
+        const size = getRandomInt(4, 14);
+
+el.style.width = `${size}px`;
+el.style.height = `${size}px`;
+
+dots.push({
+    el,
+    x: 0,
+    y: 0,
+    color,
+    size // 👈 IMPORTANT: store size
+});
     }
 
     container.appendChild(fragment);
